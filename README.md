@@ -24,6 +24,12 @@
 -Update store with Trailer Video
 -Embeddedd Youtube Trailer
 -Tailwind classes to make main Container look awesome
+-Build Secondary Component
+-Build Movie List
+-Build Movie Card
+-Find Out Image CDN URL
+-GPT Search Page
+
 
 #Features
 
