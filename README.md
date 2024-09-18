@@ -48,3 +48,7 @@
 -FilmiGPT
     -Search Bar
     -Movie Suggestions
+
+-GPT Search Page 
+-GPT Search Bar
+-Multi lingual page
