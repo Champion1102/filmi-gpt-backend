@@ -1,4 +1,4 @@
-import {REACT_APP_GEMINI_KEY, REACT_APP_OMDB_KEY, REACT_APP_TMDB_KEY} from '../secret.js'
+import {REACT_APP_FIREBASE_KEY, REACT_APP_GEMINI_KEY, REACT_APP_OMDB_KEY, REACT_APP_TMDB_KEY} from '../secret.js'
 
 export const API_OPTIONS =  {
     method: 'GET',
@@ -20,5 +20,5 @@ export const API_OPTIONS =  {
 
 
   export const GEMINI_KEY = REACT_APP_GEMINI_KEY;
-  // export const GEMINI_KEY = "AIzaSyAqP1oB5lWM_eKFfwhtr-m0h_Nzr1bv_zM"
   export const OMDB_KEY = REACT_APP_OMDB_KEY;
+ export const FIREBASE_KEY = REACT_APP_FIREBASE_KEY;

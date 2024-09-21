@@ -4,6 +4,7 @@ import Browse from './Browse'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import MovieInfo from './MovieInfo'
 import UserProfile from './UserProfile'
+import ErrorPage from './ErrorPage'
 
 
 const Body = () => {
@@ -24,6 +25,10 @@ const Body = () => {
      {
       path:'/profile',
       element:<UserProfile />
+     },
+     {
+      path:'*',
+      element:<ErrorPage />
      }
   ]);
 

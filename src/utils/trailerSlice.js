@@ -6,10 +6,10 @@ const trailerSlice = createSlice({
     initialState: { trailerId: null, title: null, releaseDate: null,language: null },
     reducers: {
         setTrailerId: (state, action) => {
-            const { trailerId, title, releaseDate,language } = action.payload; // Destructure the payload
+            const { trailerId, title, releaseDate,language } = action.payload; 
             state.trailerId = trailerId;
             state.title = title; // Set title
-            state.releaseDate = releaseDate; // Set release date
+            state.releaseDate = releaseDate; 
             state.language = language;
         },
         clearTrailerId: (state) => {

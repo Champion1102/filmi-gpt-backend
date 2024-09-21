@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { IMG_CDN_URL } from '../utils/constants';
 import useMovieDetails from '../hooks/useMovieDetails';
 import { setTrailerId } from '../utils/trailerSlice';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MovieCard = ({ details }) => {
     const navigate = useNavigate();
@@ -13,7 +15,8 @@ const MovieCard = ({ details }) => {
 
     const handleClick = () => {
         dispatch(setTrailerId({ trailerId, title, releaseDate: release_date,language:original_language })); // Dispatch trailerId, title, and release date
-        navigate('/movieinfo'); // Navigate to movieInfo page
+        navigate('/movieinfo'); 
+        toast.info("Fantastic choice, enjoy!")
     };
 
     if (!poster_path) return null;

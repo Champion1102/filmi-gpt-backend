@@ -13,7 +13,6 @@ const useOmdbMovie = (title, year,language) => {
             try {
                 const response = await fetch(`http://www.omdbapi.com/?t=${title}&y=${year}&l=${language}&apikey=${OMDB_KEY}`);
                 const data = await response.json();
-                console.log(data )
                 if (data) {
                     setMovieInfo(data);
                 } else {

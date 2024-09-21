@@ -4,6 +4,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import { FIREBASE_KEY } from "./constants";
 
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -12,7 +13,7 @@ import { getStorage } from "firebase/storage";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDgFUx8jATLaiyMpygK989PtquEx3o7Pvc",
+  apiKey:FIREBASE_KEY,
   authDomain: "filmi-gpt.firebaseapp.com",
   projectId: "filmi-gpt",
   storageBucket: "filmi-gpt.appspot.com",

@@ -5,6 +5,8 @@ import { createUserWithEmailAndPassword,signInWithEmailAndPassword,updateProfile
 import { auth } from '../utils/firebase';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Login = () => {
@@ -21,7 +23,6 @@ const Login = () => {
     }
 
     const handleButtonClick = () => {
-      console.log('clicked');
       const message = checkValidData(email.current.value, password.current.value);
       setErrorMsg(message);
     
@@ -37,27 +38,30 @@ const Login = () => {
     
             const { uid, email, displayName } = user; 
             dispatch(addUser({ uid, email, displayName }));
-    
-            console.log(user);
+            toast.warn("You are going to love it!")
+          
           })
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             setErrorMsg(errorCode + '-' + errorMessage);
+          toast.error("valid email & Password should contain a capital letter and 8 letters!")
           });
       } else {
         signInWithEmailAndPassword(auth, email.current.value, password.current.value)
           .then((userCredential) => {
             const user = userCredential.user;
-            console.log(user);
+            
     
             const { uid, email, displayName } = user;
             dispatch(addUser({ uid, email, displayName }));
+            toast.success("Welcome back!")
           })
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             setErrorMsg(errorCode + "-" + errorMessage);
+            toast.error("valid email & Password should contain a capital letter and 8 letters!")
           });
       }
     };

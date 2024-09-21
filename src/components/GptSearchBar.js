@@ -20,14 +20,11 @@ const GptSearchBar = () => {
 
   const handleGptSearchClick = async () => {
     const searchText = searchTextRef.current.value;
-    // Make API call to Gemini API and get movie results
     const response = await getGeminiResponse(searchText);
     const gptMovies = response.split(",");
-    // return response;
     const promiseArray = gptMovies.map((movie) => searchMovieTMDB(movie));
     
     const tmdbResults = await Promise.all(promiseArray);
-    console.log(tmdbResults)
     dispatch(addGptMovieResults({movieNames: gptMovies,movieResults : tmdbResults}));
   };
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../utils/firebase';
-import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
+import { useNavigate, useLocation } from 'react-router-dom'; 
 import { useSelector } from 'react-redux';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
@@ -9,6 +9,9 @@ import { addUser, removeUser } from '../utils/userSlice';
 import { toggleGptSearchView } from '../utils/gptSlice';
 import { SUPPORTED_LANGUAGES } from '../utils/constants';
 import { changeLanguage } from '../utils/configSlice';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -20,9 +23,10 @@ const Header = () => {
     const handleSignOut = () => {
         signOut(auth)
             .then(() => {
-                // Sign-out successful
+                toast.success("See you again!")
             })
             .catch((error) => {
+                toast.error(error)
                 navigate('/error');
             });
     };
@@ -35,6 +39,7 @@ const Header = () => {
     
                 if (location.pathname === '/') {
                     navigate('/browse');
+                    toast.info('here you come!')
                 }
             } else {
                 dispatch(removeUser());
@@ -51,6 +56,11 @@ const Header = () => {
 
     const handleGptSearchClick = () => {
         dispatch(toggleGptSearchView());
+        if(showgptSearch){
+            toast.success("Browse It")
+        }else{
+            toast.success("Find your Favourite")
+        }
     };
 
     const handleLanguageChange = (e) => {
@@ -86,8 +96,9 @@ const Header = () => {
                         <button
                             className="py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg transition duration-300 ease-in-out transform bg-purple-900 hover:scale-105 shadow-lg"
                             onClick={handleGptSearchClick}
+                            
                         >
-                            {showgptSearch ? 'Browse' : 'Ask Filmi!'}
+                            {showgptSearch ? 'Browse'  : 'Ask Filmi!'}
                         </button>
                     )}
 
@@ -102,7 +113,8 @@ const Header = () => {
     className="w-12 h-12 cursor-pointer rounded-full border-2 border-gray-300" 
     src={user.photoURL || "/usericon.png"} 
     alt="usericon" 
-    onClick={() => navigate('/profile')} 
+    onClick={() => {navigate('/profile');
+                   toast.info("So,you came to see yourself");}} 
   />
   
   <button 

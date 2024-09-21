@@ -17,6 +17,8 @@ const UserProfile = () => {
   const [profileImage, setProfileImage] = useState('https://i.pravatar.cc/300'); 
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(true); 
+
 
   useEffect(() => {
     if (user && user.uid) {
@@ -35,6 +37,8 @@ const UserProfile = () => {
           }
         } catch (error) {
           console.error("Error fetching user profile:", error);
+        }finally{
+          setIsFetching(false);
         }
       };
   
@@ -105,6 +109,16 @@ const UserProfile = () => {
     );
   }
 
+  if (isFetching) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <Header />
+        <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-red-600"></div>
+        <p className="ml-4">Loading your profile...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-black text-white">
       <Header />
@@ -113,7 +127,7 @@ const UserProfile = () => {
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="relative w-48 h-48">
               <img
-                src={profileImage}
+                src={profileImage }
                 alt={`${name}'s profile`}
                 className="w-full h-full object-cover rounded-full"
               />
