@@ -71,19 +71,42 @@ export default function MovieInfo() {
             </div>
             <div className="flex items-center">
   {isInWatchlist ? (
-    <SolidHeartIcon
+    <svg
       onClick={handleWatchlistToggle}
-      className="text-red-500 cursor-pointer w-8 h-8"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="red"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      className="w-8 h-8 cursor-pointer"
       title="Remove from Watchlist"
-    />
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.293l1.318-1.318a4.5 4.5 0 116.364 6.364L12 20.293l-7.682-7.682a4.5 4.5 0 010-6.364z"
+      />
+    </svg>
   ) : (
-    <OutlineHeartIcon
+    <svg
       onClick={handleWatchlistToggle}
-      className="text-gray-300 cursor-pointer w-8 h-8"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      className="w-8 h-8 cursor-pointer"
       title="Add to Watchlist"
-    />
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.293l1.318-1.318a4.5 4.5 0 116.364 6.364L12 20.293l-7.682-7.682a4.5 4.5 0 010-6.364z"
+      />
+    </svg>
   )}
 </div>
+
           </div>
         </div>
 
