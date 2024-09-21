@@ -31,15 +31,23 @@ const Header = () => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 const { uid, email, displayName } = user;
-                dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
+                dispatch(addUser({ uid, email, displayName }));
+    
+                if (location.pathname === '/') {
+                    navigate('/browse');
+                }
             } else {
                 dispatch(removeUser());
-                navigate('/');
+                if (location.pathname !== '/') {
+                    navigate('/');
+                }
             }
         });
-
+    
         return () => unsubscribe();
-    }, [dispatch, navigate]);
+    }, [dispatch, navigate, location.pathname]);
+    
+    
 
     const handleGptSearchClick = () => {
         dispatch(toggleGptSearchView());
@@ -50,17 +58,19 @@ const Header = () => {
     };
 
     const isMovieInfoPage = location.pathname.includes('/movieinfo');
+    const isProfilePage = location.pathname.includes('/profile');
 
     return (
         <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between mb-0">
             <img
-                className="w-44 mx-auto md:mx-0 bg-opacity-50 h-10 bg-black rounded"
+                className="w-44 mx-auto md:mx-0 bg-opacity-50 h-10 bg-black rounded cursor-pointer"
                 src="/logo.png"
                 alt="logo"
+                onClick={() => navigate('/browse')}
             />
             {user && (
                 <div className="flex p-2 m-auto md:m-0">
-                    {!isMovieInfoPage && showgptSearch && (
+                    {!isMovieInfoPage && !isProfilePage && showgptSearch && (
                         <select
                             className="p-2 m-2 bg-gray-900 text-white"
                             onChange={handleLanguageChange}
@@ -72,25 +82,36 @@ const Header = () => {
                             ))}
                         </select>
                     )}
-                    {!isMovieInfoPage && (
+                    {!isMovieInfoPage && !isProfilePage  && (
                         <button
-                            className="py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg"
+                            className="py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg transition duration-300 ease-in-out transform bg-purple-900 hover:scale-105 shadow-lg"
                             onClick={handleGptSearchClick}
                         >
                             {showgptSearch ? 'Browse' : 'Ask Filmi!'}
                         </button>
                     )}
 
-                    {isMovieInfoPage && (
-                        <button className="py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg" onClick={() => navigate('/browse')}>
+                    {(isMovieInfoPage || isProfilePage) && (
+                        <button className="py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg transition duration-300 ease-in-out transform bg-purple-900 hover:scale-105 shadow-lg
+                         " onClick={() => navigate('/browse')}>
                              Browse
                         </button>
                     )}
-                    
-                    <img className="w-12 h-12" src="/usericon.png" alt="usericon" />
-                    <button onClick={handleSignOut} className="font-bold text-white">
-                        Sign Out
-                    </button>
+<div className="flex items-center">
+  <img 
+    className="w-12 h-12 cursor-pointer rounded-full border-2 border-gray-300" 
+    src={user.photoURL || "/usericon.png"} 
+    alt="usericon" 
+    onClick={() => navigate('/profile')} 
+  />
+  
+  <button 
+    onClick={handleSignOut} 
+    className="font-bold text-white bg-red-700 rounded-l-full rounded-r-full pl-6 pr-8 ml-3 transition duration-300 ease-in-out transform hover:bg-red-800 hover:scale-105 shadow-lg"
+  >
+    Sign Out
+  </button>
+</div>
                 </div>
             )}
         </div>

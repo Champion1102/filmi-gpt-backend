@@ -8,24 +8,28 @@ import { useEffect } from 'react';
 
 export default function MovieInfo() {
   
-  const { trailerId, title, releaseDate } = useSelector((state) => state.trailer); 
+  const { trailerId, title, releaseDate, language } = useSelector((state) => state.trailer); 
   const year = new Date(releaseDate).getFullYear();
-  const { movieInfo, loading, error } = useOmdbMovie(title, year);
+  const { movieInfo, loading, error } = useOmdbMovie(title, year, language);
   const navigate = useNavigate();
 
   const user = useSelector((store) => store.user);
 
   useEffect(() => {
       if (!user) {
-          navigate('/'); // Redirect to login if not logged in
+          navigate('/'); 
       }
   }, [user, navigate]);
 
 
   return (
     <>
-    {loading && <p>Loading...</p>}
-    {error && <p>Error: {error}</p>}
+    {loading && (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-gray-800">
+        <p className="text-4xl text-gray-100">Loading...</p>
+      </div>
+    )}
+        {error && <p>Error: {error}</p>}
    {movieInfo && <div className="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen text-gray-100">
       <Header className="w-full" />
       

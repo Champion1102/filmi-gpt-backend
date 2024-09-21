@@ -18,26 +18,16 @@ const Browse = () => {
    useUpcomingMovies()
 
   return (
-    <div >
+    <div className="min-h-screen">
      <Header className='w-full' />
      {
-      showGptSearch ? <GptSearch /> : <>
-         <MainContainer />
-         <SecondaryContainer />
-      </>
+      showGptSearch ? <GptSearch  className=' bg-black' /> : (
+        <>
+          <MainContainer />
+          <SecondaryContainer />
+        </>
+      )
      }
-   
-     {
-        /* 
-           MainContainer
-             -VideoBackground
-             -VideoTitle
-            SecondaryContainer
-              -MoviesList * n
-              -cards * n
-        */
-     }
-
     </div>
   )
 }
