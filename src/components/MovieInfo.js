@@ -5,7 +5,6 @@ import useOmdbMovie from '../hooks/useOmdbMovie';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { addToWatchlist, removeFromWatchlist } from '../utils/watchlistSlice';
-import { FaHeart, FaRegHeart } from 'react-icons/fa';  // Heart icons
 
 
 
@@ -71,20 +70,20 @@ export default function MovieInfo() {
               <h2 className="text-2xl font-bold">🍅{movieInfo.Ratings[0].Value || 'N/A'}</h2>
             </div>
             <div className="flex items-center">
-                {isInWatchlist ? (
-                  <FaHeart
-                    onClick={handleWatchlistToggle}
-                    className="text-red-500 cursor-pointer text-3xl"
-                    title="Remove from Watchlist"
-                  />
-                ) : (
-                  <FaRegHeart
-                    onClick={handleWatchlistToggle}
-                    className="text-gray-300 cursor-pointer text-3xl"
-                    title="Add to Watchlist"
-                  />
-                )}
-              </div>
+  {isInWatchlist ? (
+    <SolidHeartIcon
+      onClick={handleWatchlistToggle}
+      className="text-red-500 cursor-pointer w-8 h-8"
+      title="Remove from Watchlist"
+    />
+  ) : (
+    <OutlineHeartIcon
+      onClick={handleWatchlistToggle}
+      className="text-gray-300 cursor-pointer w-8 h-8"
+      title="Add to Watchlist"
+    />
+  )}
+</div>
           </div>
         </div>
 
