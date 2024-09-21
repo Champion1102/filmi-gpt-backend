@@ -10,6 +10,8 @@ import Header from './Header';
 const UserProfile = () => {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
+  const watchlist = useSelector((state) => state.watchlist);
+
 
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState('');
@@ -197,6 +199,26 @@ const UserProfile = () => {
               </button>
             )}
           </div>
+        </div>
+        <div className="mt-12">
+          <h2 className="text-3xl font-bold mb-6">Your Watchlist</h2>
+          {watchlist.length === 0 ? (
+            <p className="text-lg text-gray-400">Your watchlist is empty. Add some movies to watch later!</p>
+          ) : (
+            <div className="h-[400px] w-full rounded-md border border-gray-700 overflow-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+                {watchlist.map((movie) => (
+                  <div key={movie.imdbID} className="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden">
+                    <div className="p-4">
+                      <img src={movie.Poster} alt={movie.Title} className="w-full h-48 object-cover rounded-t-lg" />
+                      <h3 className="text-lg font-semibold mt-2">{movie.Title}</h3>
+                      <p className="text-sm text-gray-400">{movie.Year}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

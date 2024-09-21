@@ -1,9 +1,12 @@
 import React from 'react';
 import Header from './Header';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import useOmdbMovie from '../hooks/useOmdbMovie';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { addToWatchlist, removeFromWatchlist } from '../utils/watchlistSlice';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';  // Heart icons
+
 
 
 export default function MovieInfo() {
@@ -11,9 +14,22 @@ export default function MovieInfo() {
   const { trailerId, title, releaseDate, language } = useSelector((state) => state.trailer); 
   const year = new Date(releaseDate).getFullYear();
   const { movieInfo, loading, error } = useOmdbMovie(title, year, language);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const user = useSelector((store) => store.user);
+  const watchlist = useSelector((state) => state.watchlist);
+  
+  const isInWatchlist = watchlist.some((movie) => movie.imdbID === movieInfo?.imdbID);
+  
+  const handleWatchlistToggle = () => {
+    if (isInWatchlist) {
+      dispatch(removeFromWatchlist(movieInfo.imdbID));
+    } else {
+      dispatch(addToWatchlist(movieInfo));
+    }
+  };
+
 
   useEffect(() => {
       if (!user) {
@@ -32,7 +48,6 @@ export default function MovieInfo() {
         {error && <p>Error: {error}</p>}
    {movieInfo && <div className="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen text-gray-100">
       <Header className="w-full" />
-      
       <div className="bg-gradient-to-r from-gray-900 to-gray-800 pt-20 text-white">
         <div className="flex flex-col sm:flex-row justify-between mx-4 sm:mx-10 border border-purple-500 bg-gradient-to-r from-purple-900 to-indigo-900 rounded-lg mb-6 p-6">
           <div>
@@ -53,8 +68,23 @@ export default function MovieInfo() {
             </div>
             <div className="text-center">
               <h4 className="text-lg font-semibold text-gray-300">Rotten Tomatoes</h4>
-              <h2 className="text-2xl font-bold">🍅{movieInfo.Ratings.find(rating => rating.Source === "Rotten Tomatoes")?.Value || 'N/A'}</h2>
+              <h2 className="text-2xl font-bold">🍅{movieInfo.Ratings[0].Value || 'N/A'}</h2>
             </div>
+            <div className="flex items-center">
+                {isInWatchlist ? (
+                  <FaHeart
+                    onClick={handleWatchlistToggle}
+                    className="text-red-500 cursor-pointer text-3xl"
+                    title="Remove from Watchlist"
+                  />
+                ) : (
+                  <FaRegHeart
+                    onClick={handleWatchlistToggle}
+                    className="text-gray-300 cursor-pointer text-3xl"
+                    title="Add to Watchlist"
+                  />
+                )}
+              </div>
           </div>
         </div>
 

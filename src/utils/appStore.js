@@ -4,7 +4,7 @@ import moviesReducer from './moviesSlice'
 import gptReducer from './gptSlice'
 import configReducer from './configSlice'
 import trailerReducer from './trailerSlice'
-
+import watchlistReducer from './watchlistSlice'
 
 const appStore = configureStore(
     {
@@ -13,7 +13,8 @@ const appStore = configureStore(
             movies: moviesReducer,
             gpt:gptReducer,
             config: configReducer,
-            trailer: trailerReducer
+            trailer: trailerReducer,
+            watchlist:watchlistReducer
         }
     }
 )
