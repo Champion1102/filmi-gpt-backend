@@ -1,11 +1,23 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector,useDispatch } from 'react-redux'
 import MovieList from './MovieList';
+import { useEffect } from 'react';
+import {resetGptMovieResults} from '../utils/gptSlice'
+
+
 
 const GptMovieSuggestions = () => {
     
   const gpt = useSelector(store => store.gpt);
   const {movieResults, movieNames} = gpt;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetGptMovieResults());
+    };
+  }, [dispatch]);
+
    
   if(!movieNames) return null;
 

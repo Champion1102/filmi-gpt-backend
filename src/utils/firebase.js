@@ -13,7 +13,7 @@ import { FIREBASE_KEY } from "./constants";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey:FIREBASE_KEY,
+  apiKey: FIREBASE_KEY,
   authDomain: "filmi-gpt.firebaseapp.com",
   projectId: "filmi-gpt",
   storageBucket: "filmi-gpt.appspot.com",
