@@ -39,6 +39,7 @@ export default function MovieInfo() {
 
   return (
     <>
+
     {loading && (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-gray-800">
         <p className="text-4xl text-gray-100">Loading...</p>

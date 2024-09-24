@@ -6,11 +6,17 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { auth, db, storage } from '../utils/firebase'; 
 import { addUser } from '../utils/userSlice';
 import Header from './Header';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
+
 
 const UserProfile = () => {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const watchlist = useSelector((state) => state.watchlist);
+  const navigate = useNavigate()
 
 
   const [isEditing, setIsEditing] = useState(false);
@@ -121,6 +127,17 @@ const UserProfile = () => {
     );
   }
 
+  const handleSignOut = () => {
+    signOut(auth)
+        .then(() => {
+            toast.success("See you again!")
+        })
+        .catch((error) => {
+            toast.error(error)
+            navigate('/error');
+        });
+};
+
   return (
     <div className="min-h-screen bg-black text-white">
       <Header />
@@ -220,6 +237,12 @@ const UserProfile = () => {
             </div>
           )}
         </div>
+
+        <button 
+         onClick={handleSignOut} 
+         className="font-bold text-white bg-red-700 rounded-l-full rounded-r-full pl-6 pr-8 ml-3 transition duration-300 ease-in-out transform hover:bg-red-800 hover:scale-105 shadow-lg mt-8">
+                                Sign Out
+        </button>
       </div>
     </div>
   );

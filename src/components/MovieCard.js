@@ -14,7 +14,7 @@ const MovieCard = ({ details }) => {
     const trailerId = useMovieDetails(id);
 
     const handleClick = () => {
-        dispatch(setTrailerId({ trailerId, title, releaseDate: release_date,language:original_language })); // Dispatch trailerId, title, and release date
+        dispatch(setTrailerId({ trailerId, title, releaseDate: release_date,language:original_language })); 
         navigate('/movieinfo'); 
         toast.info("Fantastic choice, enjoy!")
     };
