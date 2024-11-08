@@ -1,13 +1,18 @@
 const express = require('express');
 const cors = require('cors');
-const app = express();
 const mongoose = require('mongoose');
+const swaggerUi = require('swagger-ui-express')
+const swaggerJSDoc = require('swagger-jsdoc');
 require('dotenv').config();
+
+const app = express();
+const port = process.env.PORT || 3000;
+
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 const mongoURI = process.env.MONGO_URI;
-const port = 5000;
-const authRoutes = require('./Apis/Authentication/index')
 mongoose.connect(mongoURI)
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => {
@@ -15,11 +20,28 @@ mongoose.connect(mongoURI)
         process.exit(1);
     });
 
-app.use("/api",authRoutes)
+const movieRoutes = require('./Apis/routes/movieRoutes');
+const authRoutes = require('./Apis/routes/authRoutes');
 
+app.use('/', movieRoutes); 
+app.use('/api', authRoutes); 
 
-app.use(express.json());
- 
+const swaggerOptions = {
+    definition: {
+      openapi: '3.0.0',
+      info: {
+        title: 'Your API',
+        version: '1.0.0',
+        description: 'A sample API documentation using Swagger',
+      },
+    },
+    apis: ['./swagger.yaml'], // This should point to your route files
+  };
+  
+  const swaggerDocs = swaggerJSDoc(swaggerOptions); 
+  
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+  
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
